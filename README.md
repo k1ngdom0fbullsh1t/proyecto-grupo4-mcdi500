@@ -80,9 +80,59 @@ jupyter notebook
 
 | Fase | Descripción | Estado |
 |------|-------------|--------|
-| F1 | Definición del problema y configuración del entorno | En progreso |
-| F2 | Preprocesamiento, limpieza y análisis exploratorio | Pendiente |
-| F3 | Modelamiento, evaluación e interpretación | Pendiente |
+| F1 | Definición del problema y configuración del entorno | ✅ Completada |
+| F2 | Preprocesamiento, limpieza y transformación del dataset | ✅ Completada |
+| F3 | Modelamiento, evaluación e interpretación | 🔲 Pendiente |
+
+---
+
+## Fase 1 — Definición del problema
+
+**Notebook:** `notebooks/f1_definicion/F1_Definicion.ipynb`
+
+Contenido:
+- Contextualización del problema (cáncer de mama, OMS)
+- Objetivos general y específicos
+- Descripción del dataset (569 instancias, 32 variables)
+- Verificación del entorno (versiones de librerías)
+- Carga del dataset con columnas en español
+- Exploración estructural: función `explorar_dataset()`
+- Estadísticas descriptivas
+- Visualización de distribución de diagnóstico
+- Conclusiones y proyección a F2 y F3
+
+**Para ejecutar:**
+```bash
+jupyter notebook notebooks/f1_definicion/F1_Definicion.ipynb
+```
+
+---
+
+## Fase 2 — Preprocesamiento y transformación
+
+**Notebook:** `notebooks/f2_preprocesamiento/F2_Limpieza_Transformacion.ipynb`
+
+Pipeline implementado (funciones modulares):
+
+| Función | Descripción |
+|---------|-------------|
+| `cargar_datos(ruta, columnas)` | Carga `wdbc.data` desde `data/raw/` con columnas nombradas |
+| `explorar_datos(df)` | Diagnóstico: dimensiones, tipos, NA, duplicados, estadísticas |
+| `limpiar_datos(df)` | Elimina columna `id`, duplicados e imputa NA con mediana |
+| `transformar_datos(df)` | Codifica diagnóstico (B→0, M→1) y estandariza con `StandardScaler` |
+| `visualizar_transformaciones(df_orig, df_trans)` | Gráficos comparativos antes/después de la transformación |
+| `validar_dataset(df)` | Assertions de integridad: sin NA, sin duplicados, media≈0, std≈1 |
+| `exportar_dataset(df, ruta)` | Guarda el dataset procesado en `data/processed/` |
+
+**Resultado:** `data/processed/wdbc_procesado.csv` — 569 filas × 31 columnas  
+(excluido del repositorio vía `.gitignore`; se regenera ejecutando el notebook)
+
+**Para ejecutar:**
+```bash
+jupyter notebook notebooks/f2_preprocesamiento/F2_Limpieza_Transformacion.ipynb
+```
+
+> ⚠️ Ejecutar con **Restart & Run All** para garantizar reproducibilidad completa.
 
 ---
 
