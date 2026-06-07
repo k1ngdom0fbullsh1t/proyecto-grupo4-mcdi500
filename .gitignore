@@ -16,8 +16,7 @@ build/
 .ipynb_checkpoints/
 *.ipynb_checkpoints
 
-# Datos sensibles o pesados
-data/raw/
+# Datos procesados intermedios
 data/processed/
 
 # Modelos serializados grandes
