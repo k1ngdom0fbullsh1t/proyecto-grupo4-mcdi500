@@ -1,3 +1,4 @@
+# Esta funcionalidad probablemente la usaremos en fases posteriores
 import os
 import pandas as pd
 
