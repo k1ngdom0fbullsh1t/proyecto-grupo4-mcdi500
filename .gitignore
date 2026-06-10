@@ -17,7 +17,9 @@ build/
 .ipynb_checkpoints/
 *.ipynb_checkpoints
 
-# Datos procesados intermedios
+# Datos crudos y procesados (se regeneran con src/descarga_datos.py)
+data/raw/wdbc.data
+data/raw/wdbc.names
 data/processed/
 
 # Modelos serializados grandes
