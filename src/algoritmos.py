@@ -1,29 +1,88 @@
 # src/algoritmos.py
 import numpy as np
 
-def filtro_estructurado_features(df, umbral_correlacion=0.8):
-    """
-    Algoritmo estructurado iterativo para encontrar pares de variables 
-    morfológicas altamente correlacionadas.
-    Complejidad Temporal: O(n^2) donde n es el número de variables.
-    """
-    # ... tu lógica aquí ...
-    pass
 
-def busqueda_binaria_recursiva_umbral(arreglo_ordenado, objetivo, inicio, fin):
+def busqueda_lineal_iterativa(arreglo, objetivo):
     """
-    Algoritmo recursivo (Divide and Conquer) para encontrar el índice de 
-    un valor morfológico umbral en un arreglo ordenado (ej. area_mean).
-    Complejidad Temporal: O(log n)
-    Complejidad Espacial: O(log n) debido a la pila de llamadas.
+    Busqueda lineal iterativa sobre un arreglo ordenado o no ordenado.
+    Recorre cada elemento secuencialmente hasta encontrar el objetivo.
+
+    Complejidad Temporal: O(n) — recorre hasta n elementos en el peor caso.
+    Complejidad Espacial: O(1) — solo usa una variable de indice.
+
+    Parametros:
+        arreglo (array-like): arreglo de valores numericos.
+        objetivo (float): valor a buscar.
+
+    Retorna:
+        int: indice de la primera coincidencia, o -1 si no se encuentra.
+    """
+    for i in range(len(arreglo)):
+        if arreglo[i] == objetivo:
+            return i
+    return -1
+
+
+def busqueda_binaria_recursiva(arreglo_ordenado, objetivo, inicio, fin):
+    """
+    Busqueda binaria recursiva (Divide and Conquer) sobre un arreglo ordenado.
+    Descarta la mitad del espacio de busqueda en cada llamada recursiva.
+
+    Complejidad Temporal: O(log n) — divide el problema a la mitad en cada paso.
+    Complejidad Espacial: O(log n) — pila de llamadas recursivas.
+
+    Parametros:
+        arreglo_ordenado (array-like): arreglo de valores numericos ordenados.
+        objetivo (float): valor a buscar.
+        inicio (int): indice inicial del segmento a buscar.
+        fin (int): indice final del segmento a buscar.
+
+    Retorna:
+        int: indice de la coincidencia, o -1 si no se encuentra.
     """
     if inicio > fin:
         return -1
-    
+
     medio = (inicio + fin) // 2
+
     if arreglo_ordenado[medio] == objetivo:
         return medio
     elif arreglo_ordenado[medio] > objetivo:
-        return busqueda_binaria_recursiva_umbral(arreglo_ordenado, objetivo, inicio, medio - 1)
+        return busqueda_binaria_recursiva(arreglo_ordenado, objetivo, inicio, medio - 1)
     else:
-        return busqueda_binaria_recursiva_umbral(arreglo_ordenado, objetivo, medio + 1, fin)
+        return busqueda_binaria_recursiva(arreglo_ordenado, objetivo, medio + 1, fin)
+
+
+def filtro_estructurado_features(df, umbral_correlacion=0.8):
+    """
+    Algoritmo estructurado iterativo que identifica pares de variables
+    morfologicas con correlacion absoluta superior al umbral dado.
+    Util para detectar multicolinealidad antes del modelado.
+
+    Complejidad Temporal: O(n^2) donde n es el numero de variables numericas.
+    Complejidad Espacial: O(n^2) para almacenar la matriz de correlacion.
+
+    Parametros:
+        df (pd.DataFrame): dataset con variables numericas estandarizadas.
+        umbral_correlacion (float): correlacion minima absoluta para reportar
+                                    un par. Por defecto 0.8.
+
+    Retorna:
+        list[tuple]: lista de tuplas (var_a, var_b, correlacion) con los pares
+                     que superan el umbral, ordenados de mayor a menor correlacion.
+    """
+    cols = df.select_dtypes(include='number').columns.tolist()
+    if 'diagnostico' in cols:
+        cols.remove('diagnostico')
+
+    matriz_corr = df[cols].corr().abs()
+    pares_alta_correlacion = []
+
+    for i in range(len(cols)):
+        for j in range(i + 1, len(cols)):
+            correlacion = matriz_corr.iloc[i, j]
+            if correlacion >= umbral_correlacion:
+                pares_alta_correlacion.append((cols[i], cols[j], round(float(correlacion), 4)))
+
+    pares_alta_correlacion.sort(key=lambda x: x[2], reverse=True)
+    return pares_alta_correlacion
