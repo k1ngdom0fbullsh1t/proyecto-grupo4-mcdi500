@@ -143,3 +143,26 @@ jupyter notebook notebooks/f2_preprocesamiento/F2_Limpieza_Transformacion.ipynb
 - **Instancias:** 569
 - **Variables:** 32 (ID, diagnóstico, 30 características morfológicas)
 - **Variable objetivo:** Diagnosis (B = benigno, M = maligno)
+
+---
+
+### Fase 3: Algoritmos y Análisis de Complejidad
+
+**Notebook:** `notebooks/f3_modelamiento/F3_Algoritmos_Complejidad.ipynb`  
+**Script de Lógica:** `src/algoritmos.py`
+
+En esta fase se implementaron algoritmos puros en Python para la búsqueda y filtrado de características morfológicas, con el objetivo de analizar empíricamente su complejidad matemática y rendimiento frente a grandes volúmenes de datos biomédicos.
+
+**Algoritmos implementados (`src/algoritmos.py`):**
+
+| Función | Complejidad | Descripción |
+|---------|-------------|-------------|
+| `busqueda_lineal_iterativa(arreglo, objetivo)` | **O(n)** | Búsqueda secuencial estándar. Recorre el arreglo de características elemento por elemento hasta encontrar el umbral celular objetivo. |
+| `busqueda_binaria_recursiva(arreglo_ordenado, objetivo, inicio, fin)` | **O(log n)** | Búsqueda optimizada mediante estrategia *Divide and Conquer*. Requiere que los datos oncológicos estén previamente ordenados. |
+| `filtro_estructurado_features(df, umbral_correlacion)` | **O(n²)** | Algoritmo estructurado iterativo que detecta y agrupa pares de variables con alta multicolinealidad para evitar ruido en el modelado. |
+
+**Para ejecutar:**
+Recuerda tener tu entorno virtual activado (`venv`) con las librerías de `requirements.txt` instaladas.
+
+```bash
+jupyter notebook notebooks/f3_modelamiento/F3_Algoritmos_Complejidad.ipynb
