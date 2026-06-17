@@ -2,7 +2,7 @@
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import StandardScaler
-from base import Transformador  # Importa la clase abstracta base
+from base import Transformador
 
 class EliminadorColumnas(Transformador):
     """
