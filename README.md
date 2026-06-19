@@ -30,10 +30,10 @@ proyecto-grupo4-mcdi500/
 ├─ notebooks/
 │   ├─ f1_definicion/    # Fase 1: definición del problema y configuración del entorno
 │   ├─ f2_preprocesamiento/  # Fase 2: limpieza, transformación y EDA
-│   └─ f3_modelamiento/  # Fase 3: entrenamiento, evaluación e interpretación
+│   └─ f3_modelamiento/  # Fase 3: algoritmos, validación y análisis de complejidad
 ├─ src/                  # Módulos y funciones reutilizables
 ├─ docs/                 # Documentación adicional del proyecto
-├─ models/               # Modelos entrenados serializados
+├─ models/               # Reservado para fases posteriores
 ├─ requirements.txt      # Dependencias del proyecto
 ├─ .gitignore
 └─ README.md
@@ -80,9 +80,9 @@ jupyter notebook
 
 | Fase | Descripción | Estado |
 |------|-------------|--------|
-| F1 | Definición del problema y configuración del entorno | ✅ Completada |
-| F2 | Preprocesamiento, limpieza y transformación del dataset | ✅ Completada |
-| F3 | Modelamiento, evaluación e interpretación | 🔲 Pendiente |
+| F1 | Definición del problema y configuración del entorno | Completada |
+| F2 | Preprocesamiento, limpieza y transformación del dataset | Completada |
+| F3 | Modelamiento, evaluación e interpretación | Completada |
 
 ---
 
@@ -132,7 +132,42 @@ Pipeline implementado (funciones modulares):
 jupyter notebook notebooks/f2_preprocesamiento/F2_Limpieza_Transformacion.ipynb
 ```
 
-> ⚠️ Ejecutar con **Restart & Run All** para garantizar reproducibilidad completa.
+---
+
+## Fase 3 — Algoritmos y análisis de complejidad
+
+**Notebook:** `notebooks/f3_modelamiento/F3_Algoritmos_Complejidad.ipynb`
+
+**Script:** `src/algoritmos.py`
+
+Algoritmos implementados:
+
+| Función | Descripción | Complejidad |
+|----------|-------------|-------------|
+| `busqueda_lineal_iterativa()` | Búsqueda secuencial sobre una lista | O(n) |
+| `busqueda_binaria_recursiva()` | Búsqueda recursiva mediante Divide and Conquer | O(log n) |
+| `filtro_estructurado_features()` | Identificación de variables altamente correlacionadas | O(n²) |
+
+Validaciones realizadas:
+
+- Caso normal
+- Casos límite
+- Entradas inválidas
+- Ejecución completa mediante Restart & Run All
+
+Benchmark:
+
+- Medición de tiempos mediante `timeit`
+- Comparación entre algoritmos iterativos y recursivos
+- Análisis teórico y empírico de complejidad Big O
+
+**Para ejecutar:**
+
+```bash
+jupyter notebook notebooks/f3_modelamiento/F3_Algoritmos_Complejidad.ipynb
+```
+
+> Ejecutar con **Restart & Run All** para reproducir correctamente todas las validaciones y mediciones de rendimiento.
 
 ---
 
@@ -146,23 +181,18 @@ jupyter notebook notebooks/f2_preprocesamiento/F2_Limpieza_Transformacion.ipynb
 
 ---
 
-### Fase 3: Algoritmos y Análisis de Complejidad
+### Dataset procesado
 
-**Notebook:** `notebooks/f3_modelamiento/F3_Algoritmos_Complejidad.ipynb`  
-**Script de Lógica:** `src/algoritmos.py`
+Archivo generado:
 
-En esta fase se implementaron algoritmos puros en Python para la búsqueda y filtrado de características morfológicas, con el objetivo de analizar empíricamente su complejidad matemática y rendimiento frente a grandes volúmenes de datos biomédicos.
+```text
+data/processed/wdbc_procesado.csv
+```
 
-**Algoritmos implementados (`src/algoritmos.py`):**
+Transformaciones aplicadas:
 
-| Función | Complejidad | Descripción |
-|---------|-------------|-------------|
-| `busqueda_lineal_iterativa(arreglo, objetivo)` | **O(n)** | Búsqueda secuencial estándar. Recorre el arreglo de características elemento por elemento hasta encontrar el umbral celular objetivo. |
-| `busqueda_binaria_recursiva(arreglo_ordenado, objetivo, inicio, fin)` | **O(log n)** | Búsqueda optimizada mediante estrategia *Divide and Conquer*. Requiere que los datos oncológicos estén previamente ordenados. |
-| `filtro_estructurado_features(df, umbral_correlacion)` | **O(n²)** | Algoritmo estructurado iterativo que detecta y agrupa pares de variables con alta multicolinealidad para evitar ruido en el modelado. |
+- Eliminación de columna ID
+- Eliminación de duplicados
+- Codificación de diagnóstico (B → 0, M → 1)
+- Estandarización mediante StandardScaler
 
-**Para ejecutar:**
-Recuerda tener tu entorno virtual activado (`venv`) con las librerías de `requirements.txt` instaladas.
-
-```bash
-jupyter notebook notebooks/f3_modelamiento/F3_Algoritmos_Complejidad.ipynb
