@@ -26,14 +26,16 @@ Se utiliza el dataset **Breast Cancer Wisconsin (Diagnostic)** (UCI Machine Lear
 proyecto-grupo4-mcdi500/
 ├─ data/
 │   ├─ raw/              # Dataset original sin modificar
-│   └─ processed/        # Datos transformados y listos para modelado
+│   └─ processed/        # Datos transformados (generado ejecutando F2, excluido del repo)
 ├─ notebooks/
-│   ├─ f1_definicion/    # Fase 1: definición del problema y configuración del entorno
-│   ├─ f2_preprocesamiento/  # Fase 2: limpieza, transformación y EDA
-│   └─ f3_modelamiento/  # Fase 3: algoritmos, validación y análisis de complejidad
+│   ├─ f1_definicion/         # Fase 1: definición del problema y configuración del entorno
+│   ├─ f2_preprocesamiento/   # Fase 2: limpieza, transformación y EDA
+│   ├─ f3_modelamiento/       # Fase 3: algoritmos, validación y análisis de complejidad
+│   └─ f4_visualizaciones/    # Fase 4: visualizaciones analíticas y comunicación de resultados
 ├─ src/                  # Módulos y funciones reutilizables
 ├─ docs/                 # Documentación adicional del proyecto
 ├─ models/               # Reservado para fases posteriores
+├─ changelog.md          # Registro de mejoras entre fases (F1–F4)
 ├─ requirements.txt      # Dependencias del proyecto
 ├─ .gitignore
 └─ README.md
@@ -82,7 +84,8 @@ jupyter notebook
 |------|-------------|--------|
 | F1 | Definición del problema y configuración del entorno | Completada |
 | F2 | Preprocesamiento, limpieza y transformación del dataset | Completada |
-| F3 | Modelamiento, evaluación e interpretación | Completada |
+| F3 | Algoritmos de búsqueda, POO y análisis de complejidad | Completada |
+| F4 | Visualizaciones analíticas y comunicación de resultados | Completada |
 
 ---
 
@@ -195,4 +198,36 @@ Transformaciones aplicadas:
 - Eliminación de duplicados
 - Codificación de diagnóstico (B → 0, M → 1)
 - Estandarización mediante StandardScaler
+
+---
+
+## Fase 4 — Visualizaciones analíticas y comunicación de resultados
+
+**Notebook:** `notebooks/f4_visualizaciones/F4_Visualizaciones.ipynb`
+
+Integra y comunica los resultados de F1–F4 mediante tres visualizaciones analíticas que responden la pregunta central del proyecto.
+
+| Gráfico | Tipo | Hallazgo |
+|---------|------|----------|
+| G1 — Distribución de diagnósticos | Barras (countplot) | El dataset tiene desbalance moderado: 357 benignos vs 212 malignos |
+| G2 — Radio celular por diagnóstico | Boxplot | Los tumores malignos tienen radio celular mayor con poca superposición |
+| G3 — Correlación entre variables | Heatmap | Las 30 variables forman bloques correlacionados; pocas podrían bastar para predecir |
+
+Los gráficos están diseñados como un storytelling de tres actos (contexto → conflicto → resolución) y cada uno incluye título con hallazgo, ejes etiquetados, fuente y celda de interpretación analítica.
+
+El notebook también incluye reflexión técnica grupal (eficiencia, escalabilidad, comparación entre fases) y bibliografía en formato APA 7.
+
+**Para ejecutar:**
+
+```bash
+jupyter notebook notebooks/f4_visualizaciones/F4_Visualizaciones.ipynb
+```
+
+> Ejecutar con **Restart & Run All**. Requiere que `data/processed/wdbc_procesado.csv` exista (generado ejecutando F2).
+
+---
+
+## Trazabilidad de mejoras
+
+Las mejoras aplicadas entre fases están registradas en [`changelog.md`](changelog.md).
 
